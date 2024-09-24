@@ -1,17 +1,28 @@
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+"use client";
 
-export default async function Admin() {
-  const session = await getServerSession();
+import { useSession } from "next-auth/react";
 
-  if (!session) {
-    redirect("/login")
+const TokenDisplay = () => {
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return <p>Carregando...</p>;
   }
-  
+
+  if (status === "unauthenticated") {
+    return <p>Você não está autenticado.</p>;
+  }
+
   return (
     <div>
-      <div>Olá, {session?.user?.name}</div>
-      <div>Admin</div>
+      <h1>Token JWT:</h1>
+      {session?.accessToken ? (
+        <p>{session.accessToken}</p>
+      ) : (
+        <p>Token não disponível</p>
+      )}
     </div>
   );
-}
+};
+
+export default TokenDisplay;

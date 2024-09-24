@@ -30,7 +30,8 @@ const handler = NextAuth({
 						return {
 							id: data.id,
 							email: credentials.email,
-							token: data.token
+							token: data.token,
+							privileges: data.authorities
 						};
 					} else {
 						throw new Error('Credenciais inválidas.');
@@ -48,12 +49,14 @@ const handler = NextAuth({
 		async jwt({ token, user, account }: any) {
 			if (user?.token) {
 				token.accessToken = user.token;
+				token.privileges = user.privileges;
 			}
 			return token;
 		},
 
 		async session({ session, token }) {
 			session.accessToken = token.accessToken;
+			session.privileges = token.privileges;
 			return session;
 		},
 	},

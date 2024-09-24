@@ -17,7 +17,12 @@ const TokenDisplay = () => {
     <div>
       <h1>Token JWT:</h1>
       {session?.accessToken ? (
-        <p>{session.accessToken}</p>
+        <div>
+          <p>{session.accessToken}</p>
+          <h1>Bem-vindo, {session?.user?.name}</h1>
+          <p>Seu token de acesso: {session.accessToken}</p>
+          <p>Seus privilégios: {session.privileges?.join(", ")}</p>
+        </div>
       ) : (
         <p>Token não disponível</p>
       )}

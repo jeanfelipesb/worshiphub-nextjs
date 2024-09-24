@@ -47,25 +47,26 @@ type Privileges = typeof validPrivileges[number];
 
 // Mapeia rotas para os privilégios exigidos
 const routePrivileges: Record<string, Privileges[]> = {
-  "/admin": ["FORTMATION_DELETE", "MEMBER_DELETE"], // Exemplo de privilégios necessários
-  "/teste": ["FORTMATION_DELETE", "MEMBER_DELETE"], // Exemplo de privilégios necessários
-  // Adicione mais rotas conforme necessário
+  "/admin/teste": ["FORTMATION_DELETE", "MEMBER_DELETE"], 
 };
 
 const hasPrivilege = (userPrivileges: string[], requiredPrivileges: Privileges[]) =>
   requiredPrivileges.some(privilege => userPrivileges.includes(privilege));
 
 export async function middleware(req: NextRequest) {
-  console.log('teeste')
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
   if (!token) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-
   const userPrivileges: string[] = token.privileges || [];
   const { pathname } = req.nextUrl;
+
+  console.log(pathname)
+  if (pathname == "/")
+    return NextResponse.redirect(new URL("/admin", req.url));
+
 
   const requiredPrivileges = routePrivileges[pathname];
 
@@ -78,5 +79,5 @@ export async function middleware(req: NextRequest) {
 
 // Configura as rotas protegidas pelo middleware
 export const config = {
-  matcher: ["/admin/:path*", "/dashboard/:path*"], // Adicione mais rotas conforme necessário
+  matcher: ["/admin/teste/:path*", "/dashboard/:path*","/"], // Adicione mais rotas conforme necessário
 };

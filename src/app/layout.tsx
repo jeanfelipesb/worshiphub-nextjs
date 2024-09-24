@@ -2,7 +2,7 @@
 
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
-
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 
 export default function RootLayout({
   children,
@@ -12,9 +12,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SessionProvider>
-          {children}
-        </SessionProvider>
+        <AppRouterCacheProvider>
+          <SessionProvider>
+            {children}
+          </SessionProvider>
+        </AppRouterCacheProvider>
       </body>
     </html>
   );

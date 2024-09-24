@@ -47,7 +47,7 @@ export default function Sidebar() {
     return () => {
       mediaQuery.removeEventListener('change', handleMediaQueryChange)
     }
-  }, [])
+  }, [setSidebarOpen])
 
   return (
     <>

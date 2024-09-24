@@ -1,6 +1,10 @@
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
+
+interface ErrorResponse {
+  message: string;
+}
 
 const handler = NextAuth({
 	pages: {
@@ -13,7 +17,7 @@ const handler = NextAuth({
 				email: { label: "Email", type: "text" },
 				password: { label: "Password", type: "password" }
 			},
-			async authorize(credentials, req) {
+			async authorize(credentials) {
 				if (!credentials) {
 					return null
 				}
@@ -36,9 +40,10 @@ const handler = NextAuth({
 					} else {
 						throw new Error('Credenciais inválidas.');
 					}
-				} catch (error: any) {
-					const errorMessage = error.response?.data?.message || 'Erro ao tentar autenticar.';
-					throw new Error(errorMessage); // Lança a mensagem de erro personalizada
+				} catch (error) {					
+          const axiosError = error as AxiosError<ErrorResponse>;
+					const errorMessage = axiosError.response?.data?.message || 'Erro ao tentar autenticar.';
+					throw new Error(errorMessage);
 				}
 			}
 		}),
@@ -46,7 +51,7 @@ const handler = NextAuth({
 	session: { strategy: 'jwt' },
 	secret: process.env.NEXTAUTH_SECRET,
 	callbacks: {
-		async jwt({ token, user, account }: any) {
+		async jwt({ token, user}) {
 			if (user?.token) {
 				token.accessToken = user.token;
 				token.privileges = user.privileges;

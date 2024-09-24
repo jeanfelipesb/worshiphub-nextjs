@@ -2,6 +2,7 @@
 
 import api from '@/lib/axios';
 import { useEffect, useState } from 'react';
+import { AxiosError } from 'axios'; 
 
 const TestApi = () => {
   const [data, setData] = useState(null);
@@ -12,9 +13,12 @@ const TestApi = () => {
       try {
         const response = await api.get('/users'); 
         setData(response.data); 
-      } catch (err: any) {
-        if (err !== null)
-          setError(err.message); 
+        console.log(response.data); 
+      } catch (err) {
+        const error = err as AxiosError; 
+        if (error && error.message) {
+          setError(error.message); 
+        } 
       }
     };
 

@@ -1,15 +1,11 @@
 'use client'
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-
 export default function Page() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    // Handle form submission logic here
-    console.log('Form submitted')
-  }
+  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault()
+  //   // Handle form submission logic here
+  //   console.log('Form submitted')
+  // }
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6 border-t-4 border-purple-600 mb-6">

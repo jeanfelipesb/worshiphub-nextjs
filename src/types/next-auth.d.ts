@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import "next-auth";
 
 // Sobrescreve os tipos padrões de `Session` e `JWT` do NextAuth
 declare module "next-auth" {
@@ -10,6 +10,7 @@ declare module "next-auth" {
   interface User {
     accessToken?: string;  // Adiciona a propriedade `accessToken` ao usuário
     privileges?: string[];
+    token?: string;  // Adiciona a propriedade `accessToken` ao token JWT
   }
 }
 

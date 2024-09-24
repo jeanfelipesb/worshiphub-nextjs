@@ -8,9 +8,9 @@ type Calendar = {
 };
 
 type Event = {
-  eventName: String,
+  eventName: string,
   Date: Date;
-  Category: String
+  Category: string
 }
 
 export const useCalendarStore = create<Calendar>(set => ({

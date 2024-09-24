@@ -14,7 +14,8 @@ export default function LoginForm() {
 	const [hasError, setHasError] = useState(false);
 	const router = useRouter();
 
-	async function login(e: React.FormEvent<HTMLFormElement>) {
+	async function login(e: React.FormEvent<HTMLFormElement>) {		
+		setIsLoading(true);
 		e.preventDefault();
 		const formData = new FormData(e.currentTarget)
 
